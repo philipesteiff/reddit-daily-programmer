@@ -6,13 +6,23 @@ package challenge287.easy
 
 class Solution287 {
 
-    fun largestDigit(number: Int): Int = splitNumber(number).let {
+    fun descendingDigits(number: Int): Int = splitNumber(number).let {
         return it
                 .sorted()
-                .foldRightIndexed(0) { index, next, accumulator ->
-                    accumulator + next * (Math.pow(10.0, index.toDouble())).toInt()
-                }
+                .numberToPowerOfIndex()
     }
+
+    fun ascendantDigits(number: Int): Int = splitNumber(number).let {
+        return it
+                .sortedDescending()
+                .numberToPowerOfIndex()
+
+    }
+
+    fun List<Int>.numberToPowerOfIndex() = this.foldRightIndexed(0) { index, next, accumulator ->
+        accumulator + next * Math.pow(10.0, index.toDouble()).toInt()
+    }
+
 
     private fun splitNumber(number: Int) = listOf(
             number % 10,
@@ -21,7 +31,16 @@ class Solution287 {
             number / 1000
     )
 
-    private fun countKaprekar() {
+    fun kaprekarIterations(number: Int): Int {
+        var count = 0
+        var result = number
 
+        while (result != 6174) {
+            result = kaprekar(result)
+            count++
+        }
+        return count
     }
+
+    private fun kaprekar(number: Int) = (descendingDigits(number) - ascendantDigits(number))
 }
