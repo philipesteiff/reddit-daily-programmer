@@ -47,6 +47,17 @@ import org.hamcrest.Matchers.*
 class Tests287 {
 
     @Test
+    fun testLargestDigit() {
+        with(Solution287()) {
+            assertThat(largestDigit(1234), equalTo(4))
+            assertThat(largestDigit(3253), equalTo(5))
+            assertThat(largestDigit(9800), equalTo(9))
+            assertThat(largestDigit(3333), equalTo(3))
+            assertThat(largestDigit(120), equalTo(2))
+        }
+    }
+
+    @Test
     fun testDescendingDigits() {
         with(Solution287()) {
             assertThat(descendingDigits(1234), equalTo(4321))
@@ -68,12 +79,13 @@ class Tests287 {
         }
     }
 
-    @Test
-    fun testKaprekar() {
+    @Test(timeout = 100)
+    fun testKaprekarInteractionCount() {
         with(Solution287()) {
-            assertThat(kaprekarIterations(6589), equalTo(2))
-            assertThat(kaprekarIterations(5455), equalTo(5))
-            assertThat(kaprekarIterations(6174), equalTo(0))
+            assertThat(kaprekarIterationCount(6589), equalTo(2))
+            assertThat(kaprekarIterationCount(5455), equalTo(5))
+            assertThat(kaprekarIterationCount(6174), equalTo(0))
+            assertThat(kaprekarIterationCount(3333), equalTo(0))
         }
     }
 }

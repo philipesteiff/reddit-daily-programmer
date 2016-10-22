@@ -6,23 +6,33 @@ package challenge287.easy
 
 class Solution287 {
 
-    fun descendingDigits(number: Int): Int = splitNumber(number).let {
-        return it
-                .sorted()
-                .numberToPowerOfIndex()
+    val kaprekarConstant: Int = 6174
+
+    fun largestDigit(number: Int) = splitNumber(number).max()
+
+    fun descendingDigits(number: Int) = splitNumber(number)
+            .sortedDescending()
+            .listToInt()
+
+    fun ascendantDigits(number: Int) = splitNumber(number)
+            .sorted()
+            .listToInt()
+
+    fun kaprekarIterationCount(number: Int) = when {
+        !hasAtLeastTwoDifferentDigits(number) -> 0
+        else -> {
+            var count = 0
+            var result = number
+
+            while (result != kaprekarConstant) {
+                result = kaprekar(result)
+                count++
+            }
+            count
+        }
     }
 
-    fun ascendantDigits(number: Int): Int = splitNumber(number).let {
-        return it
-                .sortedDescending()
-                .numberToPowerOfIndex()
-
-    }
-
-    fun List<Int>.numberToPowerOfIndex() = this.foldRightIndexed(0) { index, next, accumulator ->
-        accumulator + next * Math.pow(10.0, index.toDouble()).toInt()
-    }
-
+    private fun kaprekar(number: Int) = descendingDigits(number) - ascendantDigits(number)
 
     private fun splitNumber(number: Int) = listOf(
             number % 10,
@@ -31,16 +41,9 @@ class Solution287 {
             number / 1000
     )
 
-    fun kaprekarIterations(number: Int): Int {
-        var count = 0
-        var result = number
+    private fun hasAtLeastTwoDifferentDigits(number: Int) = splitNumber(number)
+            .distinct().count() >= 2
 
-        while (result != 6174) {
-            result = kaprekar(result)
-            count++
-        }
-        return count
-    }
+    fun List<Int>.listToInt() = this.reduce { total, next -> total * 10 + next }
 
-    private fun kaprekar(number: Int) = (descendingDigits(number) - ascendantDigits(number))
 }
