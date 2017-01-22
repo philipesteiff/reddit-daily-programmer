@@ -3,10 +3,6 @@ package challenge287.easy
 import org.junit.Test
 
 /**
- * Created by philipe on 15/10/16.
- */
-
-/**
 link: https://www.reddit.com/r/dailyprogrammer/comments/56tbds/20161010_challenge_287_easy_kaprekars_routine/
 
 Description
